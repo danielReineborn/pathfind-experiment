@@ -6,7 +6,7 @@ export function makeGrid(x, y) {
       id: i,
       weight: 1,
       via: i,
-      distance: 0,
+      distance: Infinity,
       candidateCost: null,
       solved: false,
       start: false,
@@ -45,12 +45,10 @@ export function findPath(grid, cv) {
   function innerFindPath(grid, cv) {
 
     grid[cv].solved = true;
-
+    grid[cv].distance += 1;
     if (grid[cv].start) {
       grid[cv].distance = 0;
 
-    } else {
-      grid[cv].distance += grid[cv].candidateCost;
     }
 
     if (grid[cv].end) {
@@ -62,17 +60,24 @@ export function findPath(grid, cv) {
 
     } else {
 
-      for (let v of grid[cv].connected) {
+      for (let vx of grid[cv].connected) {
 
-        if (grid[v].solved) {
-          continue;
-        } else {
 
-          grid[v].candidateCost = grid[cv].distance + grid[v].weight;
-          grid[v].via = grid[cv].id;
-
-          if (!foundNode) innerFindPath(grid, grid[v].id);
+        if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
+          grid[vx].distance = grid[cv].distance + grid[vx].weight;
+          grid[vx].via = grid[cv].id;
+          console.log(grid[vx]);
         }
+
+
+
+
+      }
+
+      for (let vx of grid[cv].connected) {
+        if (grid[vx].solved) continue;
+
+        if (!foundNode) innerFindPath(grid, grid[vx].id);
 
       }
     }

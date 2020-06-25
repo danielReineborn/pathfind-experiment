@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import styled from "styled-components";
+import { makeGrid } from "./Utils";
+
+import Header from "./Component/Header";
 import Grid from "./Component/Grid";
 
+
+const Main = styled.main`
+
+`
+
 function App() {
+  /* 
+    const [grid, setGrid] = useState([]);
+  
+    useEffect(() => {
+      let grid = makeGrid(32, 24);
+      setGrid(grid);
+    }, []) */
+
 
   const [vertex, setVertex] = useState(null);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
 
+  //Change to copy grid and set clicked node to grid[nodeClicked].start = true, updategrid(newgrid)
   function handleVertex(e) {
-    console.log(e.target.className);
     if (vertex) {
       console.log(e.target.id);
       let startVertex = e.target.id;
-      setVertex(null);
       setStart(startVertex);
+      setVertex(null);
     } else if (vertex === false) {
       let endVertex = e.target.id;
       console.log(e.target.id);
@@ -29,12 +46,12 @@ function App() {
 
 
   return (
-    <div>
-      <button onClick={() => setVertex(true)} className="start">Set start-vertex</button>
-      <button onClick={() => setVertex(false)} className="end">Set end-vertex</button>
+    <Main>
+      <Header setVertex={setVertex} />
 
-      <Grid handleVertex={handleVertex} start={start} end={end} x={32} y={24} />
-    </div>
+
+      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={32} y={24} />
+    </Main>
   );
 }
 

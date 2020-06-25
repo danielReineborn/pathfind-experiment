@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { makeGrid, startEndVertex, findPath, returnShortestPath } from "../Utils";
 import styled from "styled-components";
 
+import Node from "./Node";
+
 const Container = styled.section`
   box-sizing: border-box;
   margin: 0px;
@@ -33,16 +35,17 @@ export default function Grid({ start, end, x, y, handleVertex }) {
   const [grid, updateGrid] = useState([]);
 
   useEffect(() => {
-    console.log(start, end);
 
     let grid = makeGrid(x, y);
+    if (start) grid[start].start = true;
+    if (end) grid[end].end = true;
 
     updateGrid(grid);
-  }, [start, end, x, y])
+    console.log("Update");
+  }, [x, y, start, end])
 
   function onClick(e) {
-    console.log(grid[e.target.id].connected);
-
+    console.log(grid[e.target.id]);
 
     handleVertex(e);
     let newGrid = startEndVertex(x, y, start, end);
@@ -56,17 +59,33 @@ export default function Grid({ start, end, x, y, handleVertex }) {
     console.log(returnShortestPath(grid, endId));
   }
 
+  function setStart(e) {
+    let node = e.target;
+    console.log(node);
+    /* let newGrid = [...grid];
+    newGrid[] */
+  }
+
+  function setEnd(e) {
+
+  }
+
   return (
     <>
 
       <Container x={x} y={y} className="gridCont">
-        {grid.map((x, i) => {
-          return <div onClick={onClick} className={x.start ? "grid start" : x.end ? "grid end" : "grid"} id={i} key={i}></div>
+        {grid.map((node, i) => {
+          return <Node
+            handleClick={onClick}
+            node={node}
+            key={i}
+          />
         })}
       </Container>
 
       <button onClick={runPathFinder}>Start pathfinding!</button>
-
+      <button onClick={setStart} className="start">Set start-vertex</button>
+      <button onClick={setEnd} className="end">Set end-vertex</button>
     </>
   )
 }
