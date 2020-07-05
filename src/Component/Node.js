@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   height: 20px;
   width: 20px;
   font-size: 10px;
-  background-color: ${props => props.node.start ? "green" : props.node.end ? "red" : "white"}
+  background-color: ${props => props.node.color}
 `
 
 export default function Node({ handleClick, node }) {

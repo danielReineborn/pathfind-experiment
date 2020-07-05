@@ -25,7 +25,6 @@ function App() {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
 
-  //Change to copy grid and set clicked node to grid[nodeClicked].start = true, updategrid(newgrid)
   function handleVertex(e) {
     if (vertex) {
       console.log(e.target.id);

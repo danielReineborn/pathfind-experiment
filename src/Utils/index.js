@@ -11,6 +11,7 @@ export function makeGrid(x, y) {
       solved: false,
       start: false,
       end: false,
+      color: "white",
       connected: defineConnected(i, x, y)
 
     }
@@ -28,9 +29,11 @@ export function startEndVertex(x, y, start, end) {
   if (start) {
 
     grid[start].start = true;
+    grid[start].color = "green";
   }
   if (end) {
     grid[end].end = true;
+    grid[end].color = "red";
   }
   return grid;
 }
@@ -56,33 +59,21 @@ export function findPath(grid, cv) {
       rV = grid[cv].id;
       console.log(rV);
       return rV;
-
-
     } else {
 
       for (let vx of grid[cv].connected) {
-
-
         if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
           grid[vx].distance = grid[cv].distance + grid[vx].weight;
           grid[vx].via = grid[cv].id;
           console.log(grid[vx]);
         }
-
-
-
-
       }
 
       for (let vx of grid[cv].connected) {
         if (grid[vx].solved) continue;
-
         if (!foundNode) innerFindPath(grid, grid[vx].id);
-
       }
     }
-
-
   }
 
   if (!foundNode) innerFindPath(grid, cv);
@@ -163,4 +154,12 @@ export function returnShortestPath(grid, v) {
   }
   return path;
 
+}
+
+export function showPath(grid, path) {
+  let newGrid = [...grid];
+  for (let id of path) {
+    newGrid[id].color = "#71AAC8";
+  }
+  return newGrid;
 }
