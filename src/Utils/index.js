@@ -39,8 +39,6 @@ export function startEndVertex(x, y, start, end) {
 }
 
 
-// Göra så att algoritmen faktiskt prioriterar väg. Nu hittar den en väg men finns ingen prio.
-// Hanterar värdena fel.
 export function findPath(grid, cv) {
   let foundNode = false;
   let rV;
@@ -77,6 +75,60 @@ export function findPath(grid, cv) {
   }
 
   if (!foundNode) innerFindPath(grid, cv);
+
+  return rV;
+
+}
+
+//array of connected nodes as a parameter. 
+//  - array of all connected nodes with !solved.
+//  - stop 
+export function findPath2(grid, cv) {
+  let foundNode = false;
+  let rV;
+
+  //grid[start].solved = true;
+  let firstArr = grid[cv].connected
+  grid[cv].solved = true;
+
+  grid[cv].distance += 1;
+  if (grid[cv].start) {
+    grid[cv].distance = 0;
+
+  }
+
+  function innerFindPath2(grid, arr) {
+    for (let vx of arr) {
+      if (grid[vx].end) {
+        foundNode = true;
+        rV = grid[vx].id;
+        console.log(rV);
+        return rV;
+      }
+      grid[vx].distance += 1;
+      if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
+        grid[vx].distance = grid[cv].distance + grid[vx].weight;
+        console.log(grid[vx]);
+        grid[vx].solved = true;
+      }
+    }
+    let addedConnections = [];
+    for (let node of arr) {
+      for (let connection of grid[node].connected)
+        if (grid[connection].solved === false) {
+          grid[connection].via = grid[node].id;
+          addedConnections.push(node);
+        }
+    }
+    if (!foundNode) innerFindPath2(grid, addedConnections);
+    /* for (let vx of grid[cv].connected) {
+      if (grid[vx].solved) continue;
+      if (!foundNode) innerFindPath2(grid, grid[vx].id);
+    } */
+
+  }
+
+  if (!foundNode) innerFindPath2(grid, firstArr);
 
   return rV;
 

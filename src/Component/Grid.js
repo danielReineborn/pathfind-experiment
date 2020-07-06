@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { makeGrid, startEndVertex, findPath, returnShortestPath, showPath } from "../Utils";
+import { makeGrid, startEndVertex, findPath2, returnShortestPath, showPath } from "../Utils";
 import styled from "styled-components";
 
 import Node from "./Node";
@@ -53,7 +53,7 @@ export default function Grid({ start, end, x, y, handleVertex }) {
   }
 
   function runPathFinder() {
-    let endId = findPath(grid, start);
+    let endId = findPath2(grid, start);
     let path = returnShortestPath(grid, endId);
 
     // gör en fn som tar arrayen och uppdaterar color till.
