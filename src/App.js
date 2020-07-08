@@ -49,7 +49,7 @@ function App() {
       <Header setVertex={setVertex} />
 
 
-      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={32} y={24} />
+      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={20} y={20} />
     </Main>
   );
 }

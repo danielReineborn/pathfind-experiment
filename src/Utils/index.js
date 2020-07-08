@@ -6,9 +6,11 @@ export function makeGrid(x, y) {
       id: i,
       weight: 1,
       via: i,
+      via2: {},
       distance: Infinity,
       candidateCost: null,
       solved: false,
+      linked: false,
       start: false,
       end: false,
       color: "white",
@@ -91,41 +93,62 @@ export function findPath2(grid, cv) {
   let firstArr = grid[cv].connected
   grid[cv].solved = true;
 
-  grid[cv].distance += 1;
   if (grid[cv].start) {
     grid[cv].distance = 0;
 
   }
+  for (let firstNode of grid[cv].connected) {
+    grid[firstNode].distance = grid[cv].distance + grid[firstNode].weight;
+    grid[firstNode].via = grid[cv].id;
+  }
 
   function innerFindPath2(grid, arr) {
+    for (let vx of arr) {
+      /* if (grid[vx].end) {
+        foundNode = true;
+        rV = grid[vx].id;
+        console.log(rV, grid);
+        return rV;
+      } */
+      /* grid[vx].distance += 1; */
+      grid[vx].solved = true;
+
+
+      /* if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
+        grid[vx].distance = grid[cv].distance + grid[vx].weight;
+        console.log(grid[vx]);
+        grid[vx].solved = true;
+      } */
+    }
+
+    let addedConnections = [];
+    for (let node of arr) {
+      grid[node].linked = true;
+      for (let connection of grid[node].connected) {
+        if (grid[connection].distance > grid[node].distance + grid[connection].weight) {
+          grid[connection].distance = grid[node].distance + grid[connection].weight;
+          grid[connection].via = grid[node].id;
+          grid[connection].via2[node] = grid[connection].distance;
+          console.log("händer?");
+        }
+
+
+
+        if (grid[connection].solved === true || grid[connection].linked === true) continue;
+        addedConnections.push(connection);
+      }
+
+    }
     for (let vx of arr) {
       if (grid[vx].end) {
         foundNode = true;
         rV = grid[vx].id;
-        console.log(rV);
+        console.log(rV, grid);
         return rV;
       }
-      grid[vx].distance += 1;
-      if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
-        grid[vx].distance = grid[cv].distance + grid[vx].weight;
-        console.log(grid[vx]);
-        grid[vx].solved = true;
-      }
     }
-    let addedConnections = [];
-    for (let node of arr) {
-      for (let connection of grid[node].connected)
-        if (grid[connection].solved === false) {
-          grid[connection].via = grid[node].id;
-          addedConnections.push(node);
-        }
-    }
-    if (!foundNode) innerFindPath2(grid, addedConnections);
-    /* for (let vx of grid[cv].connected) {
-      if (grid[vx].solved) continue;
-      if (!foundNode) innerFindPath2(grid, grid[vx].id);
-    } */
 
+    if (!foundNode) innerFindPath2(grid, addedConnections);
   }
 
   if (!foundNode) innerFindPath2(grid, firstArr);
