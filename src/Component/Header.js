@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.header`
-  height: 250px;
-  background-color: #4B748B;
+  height: 150px;
+  background-color: #2D3641;
 
 `
 

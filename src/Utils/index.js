@@ -13,7 +13,7 @@ export function makeGrid(x, y) {
       linked: false,
       start: false,
       end: false,
-      color: "white",
+      color: "#E5EEDC",
       connected: defineConnected(i, x, y)
 
     }
@@ -112,6 +112,8 @@ export function findPath2(grid, cv) {
       } */
       /* grid[vx].distance += 1; */
       grid[vx].solved = true;
+      grid[vx].color = "lightsalmon";
+
 
 
       /* if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
@@ -122,23 +124,26 @@ export function findPath2(grid, cv) {
     }
 
     let addedConnections = [];
+
+
     for (let node of arr) {
-      grid[node].linked = true;
       for (let connection of grid[node].connected) {
-        if (grid[connection].distance > grid[node].distance + grid[connection].weight) {
+        if (grid[connection].distance >= grid[node].distance + grid[connection].weight) {
           grid[connection].distance = grid[node].distance + grid[connection].weight;
           grid[connection].via = grid[node].id;
           grid[connection].via2[node] = grid[connection].distance;
-          console.log("händer?");
+          grid[connection].color = "grey";
         }
 
 
-
         if (grid[connection].solved === true || grid[connection].linked === true) continue;
+        grid[connection].linked = true;
         addedConnections.push(connection);
+
       }
 
     }
+
     for (let vx of arr) {
       if (grid[vx].end) {
         foundNode = true;
@@ -147,21 +152,23 @@ export function findPath2(grid, cv) {
         return rV;
       }
     }
-
+    console.log(addedConnections);
     if (!foundNode) innerFindPath2(grid, addedConnections);
-  }
 
+  }
   if (!foundNode) innerFindPath2(grid, firstArr);
 
   return rV;
 
 }
-// lägg in hela object o hantera weight.
+//commented connections is for diagonals. 
 export function defineConnected(i, x, y) {
   let connections = [
-    i - (x + 1), i - x, i - (x - 1),
+    /* i - (x + 1),  */
+    i - x, /*  i - (x - 1), */
     i - 1, i + 1,
-    i + (x - 1), i + x, i + (x + 1),
+    /* i + (x - 1),  */
+    i + x /* , i + (x + 1), */
   ]
   let rmTop = [i - (x + 1), i - x, i - (x - 1), ];
   let rmRight = [i - (x - 1), i + 1, i + (x + 1)];

@@ -8,18 +8,12 @@ import Grid from "./Component/Grid";
 
 
 const Main = styled.main`
-
+box-sizing: border-box;
+background-color: #D3D3D3;
+min-height: 100vh;
 `
 
 function App() {
-  /* 
-    const [grid, setGrid] = useState([]);
-  
-    useEffect(() => {
-      let grid = makeGrid(32, 24);
-      setGrid(grid);
-    }, []) */
-
 
   const [vertex, setVertex] = useState(null);
   const [start, setStart] = useState(null);
@@ -49,7 +43,7 @@ function App() {
       <Header setVertex={setVertex} />
 
 
-      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={20} y={20} />
+      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={50} y={20} />
     </Main>
   );
 }

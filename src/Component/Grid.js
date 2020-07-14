@@ -6,20 +6,14 @@ import Node from "./Node";
 
 const Container = styled.section`
   box-sizing: border-box;
-  margin: 0px;
-  height: ${props => props.y * 20}px;
-  width: ${props => props.x * 20}px;
+  height: ${props => props.y * 30 + 3}px;
+  width: ${props => props.x * 30 + 3}px;
+  border: 1px solid #E5EEDC;
   display: flex;
   flex-flow: wrap;
+  margin: auto;
+  margin-top: 55px;
 
-  .grid {
-    display: block;
-    box-sizing: border-box;
-    border: 1px solid black;
-    height: 20px;
-    width:20px;
-    
-  }
 
   .start {
     background-color: green;

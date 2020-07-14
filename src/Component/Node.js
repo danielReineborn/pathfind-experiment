@@ -5,8 +5,8 @@ const Wrapper = styled.div`
   display: block;
   box-sizing: border-box;
   border: 1px solid black;
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   font-size: 10px;
   background-color: ${props => props.node.color}
 `
@@ -22,7 +22,7 @@ export default function Node({ handleClick, node }) {
     <Wrapper node={node}
       onClick={onClick}
       id={node.via}
-    >{node.id}
+    >
     </Wrapper>
   )
 }
