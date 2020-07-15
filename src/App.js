@@ -9,7 +9,7 @@ import Grid from "./Component/Grid";
 
 const Main = styled.main`
 box-sizing: border-box;
-background-color: #D3D3D3;
+background-color: #ffffff;
 min-height: 100vh;
 `
 

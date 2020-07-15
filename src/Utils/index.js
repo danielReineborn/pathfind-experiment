@@ -104,12 +104,12 @@ export function findPath2(grid, cv) {
 
   function innerFindPath2(grid, arr) {
     for (let vx of arr) {
-      /* if (grid[vx].end) {
+      if (grid[vx].end) {
         foundNode = true;
         rV = grid[vx].id;
         console.log(rV, grid);
         return rV;
-      } */
+      }
       /* grid[vx].distance += 1; */
       grid[vx].solved = true;
       grid[vx].color = "lightsalmon";
@@ -126,14 +126,17 @@ export function findPath2(grid, cv) {
     let addedConnections = [];
 
 
+
     for (let node of arr) {
       for (let connection of grid[node].connected) {
-        if (grid[connection].distance >= grid[node].distance + grid[connection].weight) {
+
+        if (grid[connection].distance > grid[node].distance + grid[connection].weight) {
           grid[connection].distance = grid[node].distance + grid[connection].weight;
           grid[connection].via = grid[node].id;
           grid[connection].via2[node] = grid[connection].distance;
           grid[connection].color = "grey";
         }
+
 
 
         if (grid[connection].solved === true || grid[connection].linked === true) continue;
@@ -144,14 +147,14 @@ export function findPath2(grid, cv) {
 
     }
 
-    for (let vx of arr) {
+    /* for (let vx of arr) {
       if (grid[vx].end) {
         foundNode = true;
         rV = grid[vx].id;
         console.log(rV, grid);
         return rV;
       }
-    }
+    } */
     console.log(addedConnections);
     if (!foundNode) innerFindPath2(grid, addedConnections);
 
@@ -164,7 +167,7 @@ export function findPath2(grid, cv) {
 //commented connections is for diagonals. 
 export function defineConnected(i, x, y) {
   let connections = [
-    /* i - (x + 1),  */
+    /* i - (x + 1), */
     i - x, /*  i - (x - 1), */
     i - 1, i + 1,
     /* i + (x - 1),  */

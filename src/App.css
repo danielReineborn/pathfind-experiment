@@ -6,6 +6,12 @@
 #E5EEDC - sand
 */
 
-* {
+html {
   box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }

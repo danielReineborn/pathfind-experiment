@@ -14,12 +14,10 @@ const Container = styled.section`
   margin: auto;
   margin-top: 55px;
 
-
-  .start {
-    background-color: green;
-  }
-  .end {
-    background-color: red;
+  .pathfinder {
+    position: absolute;
+    top: 25px;
+    left: 0px;
   }
 `
 
@@ -57,17 +55,6 @@ export default function Grid({ start, end, x, y, handleVertex }) {
     updateGrid(visualGrid);
   }
 
-  function setStart(e) {
-    let node = e.target;
-    console.log(node);
-    /* let newGrid = [...grid];
-    newGrid[] */
-  }
-
-  function setEnd(e) {
-
-  }
-
   return (
     <>
 
@@ -79,11 +66,9 @@ export default function Grid({ start, end, x, y, handleVertex }) {
             key={i}
           />
         })}
+        <button className="pathfinder" onClick={runPathFinder}>Start pathfinding!</button>
       </Container>
 
-      <button onClick={runPathFinder}>Start pathfinding!</button>
-      <button onClick={setStart} className="start">Set start-vertex</button>
-      <button onClick={setEnd} className="end">Set end-vertex</button>
     </>
   )
 }

@@ -3,9 +3,16 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.header`
-  height: 150px;
+  height: 100px;
   background-color: #2D3641;
 
+  .start {
+    
+  }
+  
+  .end {
+
+  }
 `
 
 export default function Header({ setVertex }) {
