@@ -6,9 +6,9 @@ export function makeGrid(x, y) {
       id: i,
       weight: 1,
       via: i,
-      via2: {},
+      via2: {}, //Can be removed.
       distance: Infinity,
-      candidateCost: null,
+      candidateCost: null, //Can be removed.
       solved: false,
       linked: false,
       start: false,
@@ -89,6 +89,7 @@ export function findPath2(grid, cv) {
   let foundNode = false;
   let rV;
 
+
   //grid[start].solved = true;
   let firstArr = grid[cv].connected
   grid[cv].solved = true;
@@ -108,6 +109,7 @@ export function findPath2(grid, cv) {
         foundNode = true;
         rV = grid[vx].id;
         console.log(rV, grid);
+
         return rV;
       }
       /* grid[vx].distance += 1; */
@@ -136,9 +138,6 @@ export function findPath2(grid, cv) {
           grid[connection].via2[node] = grid[connection].distance;
           grid[connection].color = "grey";
         }
-
-
-
         if (grid[connection].solved === true || grid[connection].linked === true) continue;
         grid[connection].linked = true;
         addedConnections.push(connection);
@@ -156,7 +155,13 @@ export function findPath2(grid, cv) {
       }
     } */
     console.log(addedConnections);
-    if (!foundNode) innerFindPath2(grid, addedConnections);
+    if (!foundNode) innerFindPath2(grid, addedConnections)
+    /* setTimeout(() => {
+      innerFindPath2(grid, addedConnections)
+      //This works. Needs to fix async problem for updateing state. Maybe promise.
+    }, 300) */
+
+
 
   }
   if (!foundNode) innerFindPath2(grid, firstArr);

@@ -46,12 +46,15 @@ export default function Grid({ start, end, x, y, handleVertex }) {
 
   function runPathFinder() {
     let endId = findPath2(grid, start);
+
+
     let path = returnShortestPath(grid, endId);
 
     // gör en fn som tar arrayen och uppdaterar color till.
 
-    console.log(returnShortestPath(grid, endId));
+    /* console.log(returnShortestPath(grid, endId)); */
     let visualGrid = showPath(grid, path);
+
     updateGrid(visualGrid);
   }
 
