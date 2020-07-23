@@ -22,11 +22,11 @@ const Container = styled.section`
 `
 
 
-export default function Grid({ start, end, x, y, handleVertex }) {
+export default function Grid({ start, end, x, y, handleVertex, firstGrid }) {
 
-  const [grid, updateGrid] = useState([]);
+  const [grid, updateGrid] = useState(firstGrid);
 
-  useEffect(() => {
+  /* useEffect(() => {
 
     let grid = makeGrid(x, y);
     if (start) grid[start].start = true;
@@ -34,7 +34,7 @@ export default function Grid({ start, end, x, y, handleVertex }) {
 
     updateGrid(grid);
     console.log("Update");
-  }, [x, y, start, end])
+  }, [x, y, start, end]) */
 
   function onClick(e) {
     console.log(grid[e.target.id]);

@@ -11,8 +11,8 @@ export function makeGrid(x, y) {
       candidateCost: null, //Can be removed.
       solved: false,
       linked: false,
-      start: false,
-      end: false,
+      start: i === 154 ? true : false,
+      end: i === 160 ? true : false,
       color: "#E5EEDC",
       connected: defineConnected(i, x, y)
 

@@ -5,6 +5,7 @@ import { makeGrid } from "./Utils";
 
 import Header from "./Component/Header";
 import Grid from "./Component/Grid";
+import DataLayer from "./Component/DataLayer";
 
 
 const Main = styled.main`
@@ -40,10 +41,9 @@ function App() {
 
   return (
     <Main>
-      <Header setVertex={setVertex} />
-
-
-      <Grid handleVertex={handleVertex} /* grid={grid} */ start={start} end={end} x={50} y={20} />
+      <DataLayer />
+      {/* <Header setVertex={setVertex} />
+      <Grid handleVertex={handleVertex} grid={grid} start={ start } end={end} x={50} y={20} /> */}
     </Main>
   );
 }
