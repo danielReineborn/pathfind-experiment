@@ -17,19 +17,69 @@ const Wrapper = styled.div`
 
 `
 
-export default function Node({ handleClick, node }) {
+export default function Node({ handleClick, node, dispatch }) {
 
   function onClick(e) {
     console.log(e.target.id);
     handleClick(e);
   }
 
+  function handleDrop(e) {
+    e.preventDefault();
+    let start = e.dataTransfer.getData("start");
+    let end = e.dataTransfer.getData("end");
+    console.log("start", start, "end", end);
+    if (start) {
+      dispatch({ type: "newStart", newStart: e.target.id });
+    } else {
+      dispatch({ type: "newEnd", newEnd: e.target.id })
+    }
+  }
+
+  function allowDrag(e) {
+    e.preventDefault();
+
+  }
+
+  function handleDrag(e) {
+
+    if (node.start) e.dataTransfer.setData("start", e.target.id);
+    if (node.end) e.dataTransfer.setData("end", e.target.id);
+
+    console.log(e.dataTransfer);
+
+  }
+
+  function handleDragLeave(e) {
+    e.preventDefault();
+
+  }
+
+
+
   return (
     <Wrapper node={node}
-      onClick={onClick}
+      /* onClick={onClick} */
       id={node.via}
+
+      onDragOver={allowDrag}
+      onDrop={handleDrop}
+
     >
-      {node.start ? <PlayArrowIcon fontSize="large" /> : node.end ? <ClearIcon fontSize="large" /> : null}
+      {node.start ? <p
+        draggable="true"
+        onDragStart={handleDrag}
+        fontSize="large"
+        id={node.id}
+        onClick={(e) => console.log(e.target)}
+      >S</p> :
+        node.end ? <ClearIcon
+          draggable="true"
+          onDragStart={handleDrag}
+          fontSize="large"
+          id={node.id}
+        /> :
+          null}
     </Wrapper>
   )
 }

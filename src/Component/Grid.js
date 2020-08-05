@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { makeGrid, startEndVertex, findPath2, returnShortestPath, showPath } from "../Utils";
+import React, { useState, useReducer } from "react";
 import styled from "styled-components";
 
+import reducer from "../Reducers";
+import { makeGrid, startEndVertex, findPath2, returnShortestPath, showPath } from "../Utils";
 import Node from "./Node";
 
 const Container = styled.section`
@@ -26,6 +27,14 @@ export default function Grid({ start, end, x, y, handleVertex, firstGrid }) {
 
   const [grid, updateGrid] = useState(firstGrid);
 
+  const [state, dispatch] = useReducer(reducer, {
+    grid: firstGrid,
+    start: start,
+    end: end,
+  })
+
+
+
   /* useEffect(() => {
 
     let grid = makeGrid(x, y);
@@ -40,12 +49,12 @@ export default function Grid({ start, end, x, y, handleVertex, firstGrid }) {
     console.log(grid[e.target.id]);
 
     handleVertex(e);
-    let newGrid = startEndVertex(x, y, start, end);
+    let newGrid = startEndVertex(x, y, state.start, state.end);
     updateGrid(newGrid);
   }
 
   function runPathFinder() {
-    let endId = findPath2(grid, start);
+    let endId = findPath2(grid, state.start);
 
 
     let path = returnShortestPath(grid, endId);
@@ -58,15 +67,27 @@ export default function Grid({ start, end, x, y, handleVertex, firstGrid }) {
     updateGrid(visualGrid);
   }
 
+  function updater(newStart) {
+    if (grid[start].start === grid[newStart].start) return;
+
+    let newGrid = [...grid];
+    newGrid[start].start = false;
+    newGrid[newStart].start = true;
+    updateGrid(newGrid);
+
+  }
+
   return (
     <>
 
       <Container x={x} y={y} className="gridCont">
-        {grid.map((node, i) => {
+        {state.grid.map((node, i) => {
           return <Node
             handleClick={onClick}
+            dispatch={dispatch}
             node={node}
             key={i}
+            updateStart={updater}
           />
         })}
         <button className="pathfinder" onClick={runPathFinder}>Start pathfinding!</button>
