@@ -7,9 +7,9 @@ import Node from "./Node";
 
 const Container = styled.section`
   box-sizing: border-box;
-  height: ${props => props.y * 30 + 3}px;
-  width: ${props => props.x * 30 + 3}px;
-  border: 1px solid #E5EEDC;
+  height: ${props => props.y * 30 + 2.5}px;
+  width: ${props => props.x * 30 + 2.5}px;
+  border: 1px solid black;
   display: flex;
   flex-flow: wrap;
   margin: auto;

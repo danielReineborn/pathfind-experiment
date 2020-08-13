@@ -15,6 +15,12 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  .icon {
+   
+    font-size: 26px;
+    font-weight: bold;
+  }
+
 `
 
 export default function Node({ handleClick, node, dispatch }) {
@@ -67,18 +73,19 @@ export default function Node({ handleClick, node, dispatch }) {
 
     >
       {node.start ? <p
+        className="icon"
         draggable="true"
         onDragStart={handleDrag}
-        fontSize="large"
         id={node.id}
         onClick={(e) => console.log(e.target)}
       >S</p> :
-        node.end ? <ClearIcon
+        node.end ? <p
+          className="icon"
           draggable="true"
           onDragStart={handleDrag}
           fontSize="large"
           id={node.id}
-        /> :
+        >X</p> :
           null}
     </Wrapper>
   )

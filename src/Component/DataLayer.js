@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { makeGrid } from "../Utils";
 import Grid from "./Grid";
-import Header from "./Header";
+import Legend from "./Legend";
 
 const Main = styled.main`
 box-sizing: border-box;
@@ -23,7 +23,7 @@ export default function DataLayer() {
 
   return (
     <Main>
-      <Header />
+      <Legend />
       <Grid firstGrid={grid} x={x} y={y} start={start} end={end} />
     </Main>
   )
