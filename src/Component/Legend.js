@@ -4,8 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
 display: flex;
 flex-flow: column;
-border: 2px solid #71AAC8;
-border-radius: 4px;
+
 padding: 8px;
 width: fit-content;
 
@@ -20,19 +19,20 @@ width: fit-content;
 
   .display {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid black;
     border-radius: 4px;
     line-height: 30px;
   }
 
   .pos {
-    font-size: 26px;
+    font-size: 16px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #E5EEDC;
   }
 
   .solved {
@@ -47,20 +47,23 @@ width: fit-content;
   .text {
     margin: 0 0 0 4px;
   }
+  .wall {
+    background-color: black;
+  }
 
 `
 
-export default function Legend({ }) {
+export default function Legend() {
 
 
   return (
     <Wrapper>
       <div className="cont">
-        <div className="display pos">S</div>
+        <div className="display pos">&Alpha;</div>
         <p className="text">Startpoint</p>
       </div>
       <div className="cont">
-        <div className="display pos">X</div>
+        <div className="display pos">&Omega;</div>
         <p className="text">Endpoint</p>
       </div>
       <div className="cont">
@@ -69,11 +72,15 @@ export default function Legend({ }) {
       </div>
       <div className="cont">
         <div className="display search"></div>
-        <p className="text">Node is being searched.</p>
+        <p className="text">Being searched.</p>
       </div>
       <div className="cont">
         <div className="display path"></div>
-        <p className="text">Node is in the shortest path.</p>
+        <p className="text">Shortest path.</p>
+      </div>
+      <div className="cont">
+        <div className="display wall"></div>
+        <p className="text">Wall</p>
       </div>
 
     </Wrapper>

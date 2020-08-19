@@ -16,7 +16,7 @@ min-height: 100vh;
 
 function App() {
 
-  const [vertex, setVertex] = useState(null);
+  /* const [vertex, setVertex] = useState(null);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
 
@@ -36,7 +36,7 @@ function App() {
 
     console.log(start, end);
 
-  }
+  } */
 
 
   return (

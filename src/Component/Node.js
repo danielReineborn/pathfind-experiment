@@ -6,7 +6,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 const Wrapper = styled.div`
   display: block;
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid #2D3641;
   height: 30px;
   width: 30px;
   font-size: 10px;
@@ -19,11 +19,14 @@ const Wrapper = styled.div`
    
     font-size: 26px;
     font-weight: bold;
+    :hover {
+      cursor: pointer;
+    }
   }
 
 `
 
-export default function Node({ handleClick, node, dispatch }) {
+export default function Node({ handleClick, node, dispatch, wallPaint, mousePress, eraseWall }) {
 
   function onClick(e) {
     console.log(e.target.id);
@@ -47,6 +50,20 @@ export default function Node({ handleClick, node, dispatch }) {
 
   }
 
+  function handleMouseDown(e) {
+    if (wallPaint) dispatch({ type: "mousePress", mousePress: true });
+    if (eraseWall) dispatch({ type: "erase", wallNode: e.target.id });
+
+
+  }
+  function handleMouseMove(e) {
+    if (mousePress) dispatch({ type: "wall", wallNode: e.target.id });
+  }
+
+  function handleMouseUp(e) {
+    if (wallPaint) dispatch({ type: "mousePress", mousePress: false });
+  }
+
   function handleDrag(e) {
 
     if (node.start) e.dataTransfer.setData("start", e.target.id);
@@ -56,21 +73,15 @@ export default function Node({ handleClick, node, dispatch }) {
 
   }
 
-  function handleDragLeave(e) {
-    e.preventDefault();
-
-  }
-
-
-
   return (
     <Wrapper node={node}
       /* onClick={onClick} */
       id={node.via}
-
       onDragOver={allowDrag}
       onDrop={handleDrop}
-
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       {node.start ? <p
         className="icon"
@@ -78,14 +89,14 @@ export default function Node({ handleClick, node, dispatch }) {
         onDragStart={handleDrag}
         id={node.id}
         onClick={(e) => console.log(e.target)}
-      >S</p> :
+      >&Alpha;</p> :
         node.end ? <p
           className="icon"
           draggable="true"
           onDragStart={handleDrag}
           fontSize="large"
           id={node.id}
-        >X</p> :
+        >&Omega;</p> :
           null}
     </Wrapper>
   )

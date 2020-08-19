@@ -8,7 +8,7 @@ export function makeGrid(x, y) {
       via: i,
       via2: {}, //Can be removed.
       distance: Infinity,
-      candidateCost: null, //Can be removed.
+      wall: false,
       solved: false,
       linked: false,
       start: i === 154 ? true : false,
@@ -91,7 +91,7 @@ export function findPath2(grid, cv) {
 
 
   //grid[start].solved = true;
-  let firstArr = grid[cv].connected
+  let firstArr = grid[cv].connected.filter(x => !grid[x].wall);
   grid[cv].solved = true;
 
   if (grid[cv].start) {
@@ -112,11 +112,8 @@ export function findPath2(grid, cv) {
 
         return rV;
       }
-      /* grid[vx].distance += 1; */
       grid[vx].solved = true;
       grid[vx].color = "lightsalmon";
-
-
 
       /* if (grid[vx].distance > grid[cv].distance + grid[vx].weight) {
         grid[vx].distance = grid[cv].distance + grid[vx].weight;
@@ -127,39 +124,30 @@ export function findPath2(grid, cv) {
 
     let addedConnections = [];
 
-
-
     for (let node of arr) {
       for (let connection of grid[node].connected) {
 
-        if (grid[connection].distance > grid[node].distance + grid[connection].weight) {
+        if (grid[connection].distance > grid[node].distance + grid[connection].weight && grid[connection].wall === false) {
           grid[connection].distance = grid[node].distance + grid[connection].weight;
           grid[connection].via = grid[node].id;
           grid[connection].via2[node] = grid[connection].distance;
           grid[connection].color = "grey";
         }
-        if (grid[connection].solved === true || grid[connection].linked === true) continue;
+        if (grid[connection].solved === true || grid[connection].linked === true || grid[connection].wall === true) continue;
         grid[connection].linked = true;
         addedConnections.push(connection);
 
       }
 
     }
-
-    /* for (let vx of arr) {
-      if (grid[vx].end) {
-        foundNode = true;
-        rV = grid[vx].id;
-        console.log(rV, grid);
-        return rV;
-      }
-    } */
     console.log(addedConnections);
-    if (!foundNode) innerFindPath2(grid, addedConnections)
+    if (!foundNode) innerFindPath2(grid, addedConnections);
     /* setTimeout(() => {
-      innerFindPath2(grid, addedConnections)
+      dispatch({ type: updateGrid, updateGrid: grid });
+      innerFindPath2(grid, addedConnections);
       //This works. Needs to fix async problem for updateing state. Maybe promise.
     }, 300) */
+
 
 
 
@@ -178,7 +166,7 @@ export function defineConnected(i, x, y) {
     /* i + (x - 1),  */
     i + x /* , i + (x + 1), */
   ]
-  let rmTop = [i - (x + 1), i - x, i - (x - 1), ];
+  let rmTop = [i - (x + 1), i - x, i - (x - 1),];
   let rmRight = [i - (x - 1), i + 1, i + (x + 1)];
   let rmBot = [i + (x - 1), i + x, i + (x + 1)];
   let rmLeft = [i - (x + 1), i - 1, i + (x - 1)];
