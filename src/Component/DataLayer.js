@@ -21,7 +21,7 @@ const Main = styled.main`
 
 export default function DataLayer() {
 
-  const x = 50;
+  const x = 30;
   const y = 20;
   const start = 154;
   const end = 160;

@@ -43,13 +43,19 @@ export default function Grid({ start, end, x, y, firstGrid }) {
   })
 
   function runPathFinder() {
-    let endId = findPath2(state.grid, state.start);
-    let path = returnShortestPath(state.grid, endId);
 
-    // gör en fn som tar arrayen och uppdaterar color till.
-    let foundPath = showPath(state.grid, path);
-    dispatch({ type: "updateGrid", updateGrid: foundPath });
-  }
+    findPath2(state.grid, state.start, dispatch)
+      .then(id => {
+        let path = returnShortestPath(state.grid, id);
+        return path;
+      })
+      .then(path => {
+        let foundPath = showPath(state.grid, path);
+        dispatch({ type: "updateGrid", updateGrid: foundPath });
+
+      })
+
+  };
 
   return (
     <Wrapper>
@@ -65,7 +71,7 @@ export default function Grid({ start, end, x, y, firstGrid }) {
           />
         })}
       </Container>
-      <Toolbox runPathfinder={runPathFinder} dispatch={dispatch} />
+      <Toolbox runPathfinder={runPathFinder} dispatch={dispatch} wallPaint={state.wallPaint} eraseWall={state.eraseWall} />
 
     </Wrapper>
 

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ClearIcon from '@material-ui/icons/Clear';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+
 
 const Wrapper = styled.div`
   display: block;
@@ -28,16 +27,10 @@ const Wrapper = styled.div`
 
 export default function Node({ handleClick, node, dispatch, wallPaint, mousePress, eraseWall }) {
 
-  function onClick(e) {
-    console.log(e.target.id);
-    handleClick(e);
-  }
-
   function handleDrop(e) {
     e.preventDefault();
     let start = e.dataTransfer.getData("start");
     let end = e.dataTransfer.getData("end");
-    console.log("start", start, "end", end);
     if (start) {
       dispatch({ type: "newStart", newStart: e.target.id });
     } else {
